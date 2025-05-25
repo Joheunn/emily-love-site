@@ -2,44 +2,49 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>I Love You, Emily</title>
   <style>
-    body {
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
       margin: 0;
       padding: 0;
+      min-height: 100vh;
       background: radial-gradient(circle at center, #ffe6e6, #ffc2d1);
       font-family: 'Georgia', serif;
       color: #e60073;
-      overflow: hidden;
       text-align: center;
-      -webkit-text-size-adjust: 100%;
-      text-size-adjust: 100%;
-    }
-
-    #message, #subtext {
-      display: none;
+      overflow-x: hidden;
+      overflow-y: auto;
     }
 
     #message {
-      margin: 15vh auto 0;
-      font-size: 3em;
+      margin-top: 15vh;
+      font-size: 6vw;
       text-shadow: 0 0 10px #fff;
-      height: 1.5em;
-      white-space: nowrap;
-      overflow: hidden;
-      width: fit-content;
-      max-width: 90vw;
-      font-family: 'Courier New', Courier, monospace;
+      word-wrap: break-word;
     }
 
     #subtext {
-      font-size: 1.4em;
+      font-size: 4.5vw;
       margin: 30px auto;
       color: #800040;
-      max-width: 800px;
+      max-width: 90%;
       opacity: 0;
       animation: fadeIn 2s ease-in 3s forwards;
+    }
+
+    @media (min-width: 768px) {
+      #message {
+        font-size: 3em;
+      }
+      #subtext {
+        font-size: 1.3em;
+        max-width: 800px;
+      }
     }
 
     @keyframes fadeIn {
@@ -55,6 +60,7 @@
       background-color: red;
       transform: rotate(-45deg);
       animation: floatUp 5s linear infinite;
+      z-index: 1;
     }
 
     .heart::before,
@@ -83,7 +89,7 @@
         opacity: 1;
       }
       100% {
-        transform: translateY(-10vh) rotate(-45deg);
+        transform: translateY(-120vh) rotate(-45deg);
         opacity: 0;
       }
     }
@@ -95,6 +101,7 @@
       background-color: rgba(255, 192, 203, 0.5);
       border-radius: 50%;
       animation: drift 12s linear infinite;
+      z-index: 0;
     }
 
     @keyframes drift {
@@ -119,6 +126,7 @@
       font-weight: bold;
       color: #d63384;
       box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      z-index: 2;
     }
 
     #audioControl:hover {
@@ -130,11 +138,11 @@
   <div id="message"></div>
   <div id="subtext">
     Good morning, my love. I tried calling you a few times to wake you up, but it seems like you were completely knocked out—LOL. Since I finally have some quiet time to really put my thoughts into words, I want to share what’s on my heart.
-
+    <br><br>
     Even though it’s only been a “month,” I’ve truly cherished every single second I get to spend with you. I know our start wasn’t perfect, but I’m so grateful we’ve come this far. You’ve made me the happiest I’ve been in the past year—maybe even longer.
-
+    <br><br>
     As you know, I’ve been struggling a lot mentally, but just having you around makes everything feel lighter and better. Your presence brings me peace in a way I can’t fully explain. I can’t wait to see what the future holds for us, and I’m excited to build more beautiful memories together.
-
+    <br><br>
     I hope you slept well, and when you finally read this, text me so I know the website is working—haha. Just thinking of you puts the biggest smile on my face. You mean the world to me. 💘
   </div>
 
@@ -153,14 +161,18 @@
     let i = 0;
 
     function typeText() {
+      messageEl.textContent = "";
       messageEl.style.display = "block";
-      if (i < text.length) {
-        messageEl.textContent += text.charAt(i);
-        i++;
-        setTimeout(typeText, 150);
-      } else {
-        subtextEl.style.display = "block";
+      function type() {
+        if (i < text.length) {
+          messageEl.textContent += text.charAt(i);
+          i++;
+          setTimeout(type, 150);
+        } else {
+          subtextEl.style.display = "block";
+        }
       }
+      type();
     }
 
     function createHeart() {
@@ -174,7 +186,7 @@
 
     setInterval(createHeart, 300);
 
-    for (let i = 0; i < 40; i++) {
+    for (let j = 0; j < 40; j++) {
       const p = document.createElement('div');
       p.className = 'particle';
       p.style.top = Math.random() * 100 + 'vh';
@@ -202,3 +214,4 @@
   </script>
 </body>
 </html>
+
