@@ -1,23 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>I Love You, Emily</title>
   <style>
     body {
-      background-color: #ffe6e6;
-      text-align: center;
-      font-family: 'Arial', sans-serif;
       margin: 0;
       padding: 0;
+      background: radial-gradient(circle at center, #ffe6e6, #ffc2d1);
+      font-family: 'Georgia', serif;
+      color: #e60073;
       overflow: hidden;
+      text-align: center;
+    }
+
+    #message, #subtext {
+      display: none;
     }
 
     #message {
-      color: #e60073;
+      margin-top: 15vh;
       font-size: 3em;
-      margin-top: 20vh;
-      height: 1em;
+      text-shadow: 0 0 10px #fff;
+      height: 1.5em;
+    }
+
+    #subtext {
+      font-size: 1.4em;
+      margin: 30px auto;
+      color: #800040;
+      max-width: 800px;
+      opacity: 0;
+      animation: fadeIn 2s ease-in 3s forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
     }
 
     .heart {
@@ -26,7 +46,7 @@
       height: 20px;
       background-color: red;
       transform: rotate(-45deg);
-      animation: floatUp 4s linear infinite;
+      animation: floatUp 5s linear infinite;
     }
 
     .heart::before,
@@ -45,8 +65,8 @@
     }
 
     .heart::after {
-      left: 10px;
       top: 0;
+      left: 10px;
     }
 
     @keyframes floatUp {
@@ -59,38 +79,121 @@
         opacity: 0;
       }
     }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background-color: rgba(255, 192, 203, 0.5);
+      border-radius: 50%;
+      animation: drift 12s linear infinite;
+    }
+
+    @keyframes drift {
+      0% {
+        transform: translateY(0) translateX(0);
+      }
+      100% {
+        transform: translateY(-100vh) translateX(50vw);
+        opacity: 0;
+      }
+    }
+
+    #audioControl {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #fff0f5;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #d63384;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    #audioControl:hover {
+      background-color: #ffe6f0;
+    }
   </style>
 </head>
 <body>
   <div id="message"></div>
+  <div id="subtext">
+    Every heartbeat of mine whispers your name.  
+    You are the poetry I didn’t know I was writing.  
+    Forever yours. 💘
+  </div>
+
+  <button id="audioControl">Play Music</button>
+  <audio id="bgMusic" loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mp3" />
+    Your browser does not support the audio element.
+  </audio>
 
   <script>
-    // Slow typing effect
     const text = "I love you, Emily ❤️";
-    const messageElement = document.getElementById("message");
-    let index = 0;
+    const messageEl = document.getElementById("message");
+    const subtextEl = document.getElementById("subtext");
+    const audio = document.getElementById("bgMusic");
+    const button = document.getElementById("audioControl");
+    let playing = false;
+    let i = 0;
 
+    // Start typing the message
     function typeText() {
-      if (index < text.length) {
-        messageElement.textContent += text.charAt(index);
-        index++;
-        setTimeout(typeText, 150); // Adjust typing speed
+      messageEl.style.display = "block";
+      if (i < text.length) {
+        messageEl.textContent += text.charAt(i);
+        i++;
+        setTimeout(typeText, 150);
+      } else {
+        subtextEl.style.display = "block";
       }
     }
 
-    typeText();
-
-    // Floating hearts
+    // Hearts and particles on load
     function createHeart() {
-      const heart = document.createElement('div');
-      heart.className = 'heart';
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = (2 + Math.random() * 3) + 's';
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (3 + Math.random() * 2) + "s";
       document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 5000);
+      setTimeout(() => heart.remove(), 6000);
     }
 
     setInterval(createHeart, 300);
+
+    for (let i = 0; i < 40; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.top = Math.random() * 100 + 'vh';
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.animationDuration = (10 + Math.random() * 10) + 's';
+      document.body.appendChild(p);
+    }
+
+    // Play music and reveal message
+    button.addEventListener("click", () => {
+      if (!playing) {
+        audio.volume = 0.5;
+        audio.play().then(() => {
+          playing = true;
+          button.textContent = "Pause Music";
+          typeText();
+        }).catch(err => {
+          console.warn("Autoplay blocked:", err);
+        });
+      } else {
+        audio.pause();
+        button.textContent = "Play Music";
+        playing = false;
+      }
+    });
   </script>
 </body>
 </html>
+
+
+
