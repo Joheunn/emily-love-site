@@ -1,0 +1,12 @@
+#label:last-child {
+    white-space: nowrap;
+}
+
+
+p:last-child {
+    display: inline-block;
+}
+
+body {
+    background-color: darkslategrey;
+}
