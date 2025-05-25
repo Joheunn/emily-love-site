@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>I Love You, Emily</title>
   <style>
     body {
@@ -12,6 +13,8 @@
       color: #e60073;
       overflow: hidden;
       text-align: center;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
     }
 
     #message, #subtext {
@@ -19,10 +22,16 @@
     }
 
     #message {
-      margin-top: 15vh;
+      margin: 15vh auto 0;
       font-size: 3em;
+      text-shadow: 0 0 10px #fff;
+      height: 1.5em;
+      white-space: nowrap;
+      overflow: hidden;
+      width: fit-content;
+      max-width: 90vw;
+      font-family: 'Courier New', Courier, monospace;
     }
-    
 
     #subtext {
       font-size: 1.4em;
@@ -122,11 +131,11 @@
   <div id="subtext">
     Good morning, my love. I tried calling you a few times to wake you up, but it seems like you were completely knocked out—LOL. Since I finally have some quiet time to really put my thoughts into words, I want to share what’s on my heart.
 
-Even though it’s only been a “month,” I’ve truly cherished every single second I get to spend with you. I know our start wasn’t perfect, but I’m so grateful we’ve come this far. You’ve made me the happiest I’ve been in the past year—maybe even longer.
+    Even though it’s only been a “month,” I’ve truly cherished every single second I get to spend with you. I know our start wasn’t perfect, but I’m so grateful we’ve come this far. You’ve made me the happiest I’ve been in the past year—maybe even longer.
 
-As you know, I’ve been struggling a lot mentally, but just having you around makes everything feel lighter and better. Your presence brings me peace in a way I can’t fully explain. I can’t wait to see what the future holds for us, and I’m excited to build more beautiful memories together.
+    As you know, I’ve been struggling a lot mentally, but just having you around makes everything feel lighter and better. Your presence brings me peace in a way I can’t fully explain. I can’t wait to see what the future holds for us, and I’m excited to build more beautiful memories together.
 
-I hope you slept well, and when you finally read this, text me so I know the website is working—haha. Just thinking of you puts the biggest smile on my face. You mean the world to me. 💘
+    I hope you slept well, and when you finally read this, text me so I know the website is working—haha. Just thinking of you puts the biggest smile on my face. You mean the world to me. 💘
   </div>
 
   <button id="audioControl">Play Music</button>
@@ -143,7 +152,6 @@ I hope you slept well, and when you finally read this, text me so I know the web
     let playing = false;
     let i = 0;
 
-    // Start typing the message
     function typeText() {
       messageEl.style.display = "block";
       if (i < text.length) {
@@ -155,7 +163,6 @@ I hope you slept well, and when you finally read this, text me so I know the web
       }
     }
 
-    // Hearts and particles on load
     function createHeart() {
       const heart = document.createElement("div");
       heart.className = "heart";
@@ -176,7 +183,6 @@ I hope you slept well, and when you finally read this, text me so I know the web
       document.body.appendChild(p);
     }
 
-    // Play music and reveal message
     button.addEventListener("click", () => {
       if (!playing) {
         audio.volume = 0.5;
@@ -196,6 +202,3 @@ I hope you slept well, and when you finally read this, text me so I know the web
   </script>
 </body>
 </html>
-
-
-
